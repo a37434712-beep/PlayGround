@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PlayGround</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%237c9cff'/%3E%3Cpath d='M9 23V9h6.5a5 5 0 0 1 0 10H13v4z' fill='%23070b16'/%3E%3C/svg%3E">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #070b16;
+    --panel: rgba(18, 26, 46, 0.72);
+    --line: rgba(126, 162, 255, 0.22);
+    --text: #eef3ff;
+    --muted: #9fb0d0;
+    --accent: #7c9cff;
+    --accent-2: #5ee6c4;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: grid;
+    place-items: center;
+    min-height: 100svh;
+    padding: 28px;
+    overflow: hidden;
+  }
+  body::before, body::after {
+    content: "";
+    position: fixed;
+    width: 46vmax;
+    height: 46vmax;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.42;
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::before { background: #2f4dff; top: -18vmax; left: -12vmax; }
+  body::after { background: #00b894; bottom: -22vmax; right: -14vmax; opacity: 0.28; }
+  #app {
+    position: relative;
+    z-index: 1;
+    width: min(980px, 100%);
+    padding: clamp(24px, 5vw, 56px);
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    background: var(--panel);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    font-weight: 700;
+  }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent-2);
+    box-shadow: 0 0 0 0 rgba(94, 230, 196, 0.7);
+    animation: pulse 2.4s ease-out infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(94, 230, 196, 0.55); }
+    70% { box-shadow: 0 0 0 14px rgba(94, 230, 196, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(94, 230, 196, 0); }
+  }
+  h1 {
+    margin: 18px 0 12px;
+    font-size: clamp(40px, 8vw, 78px);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    background: linear-gradient(100deg, #ffffff 10%, #a9c1ff 55%, #5ee6c4 95%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  p.lede {
+    margin: 0;
+    max-width: 56ch;
+    font-size: clamp(15px, 2.2vw, 19px);
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 34px;
+  }
+  .card {
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: rgba(8, 14, 28, 0.55);
+  }
+  .card strong { display: block; font-size: 15px; margin-bottom: 6px; }
+  .card span { font-size: 13px; line-height: 1.5; color: var(--muted); }
+  footer {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: rgba(124, 156, 255, 0.08);
+    color: #cfdcff;
+    font-weight: 600;
+  }
+  @media (max-width: 720px) {
+    body { padding: 16px; align-items: start; }
+    #app { border-radius: 22px; margin-top: 4svh; }
+    .grid { grid-template-columns: 1fr; }
+    footer { justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+  <main id="app">
+    <div class="eyebrow"><span class="dot" aria-hidden="true"></span> Preview online</div>
+    <h1>PlayGround</h1>
+    <p class="lede">A small, self-contained static playground. The preview server is serving this build from <code>dist/</code> on the project's own port.</p>
+    <section class="grid" aria-label="Project details">
+      <div class="card"><strong>Static build</strong><span>No runtime dependencies, no external assets. Built and served locally.</span></div>
+      <div class="card"><strong>Responsive</strong><span>Layout adapts from wide desktop down to a 390&nbsp;px mobile viewport.</span></div>
+      <div class="card"><strong>Capture ready</strong><span>Marks the document ready once fonts and layout have settled.</span></div>
+    </section>
+    <footer>
+      <span class="pill"><span class="dot" aria-hidden="true"></span> Running</span>
+      <span id="stamp">Served from dist/index.html</span>
+    </footer>
+  </main>
+  <script>
+    (function () {
+      function ready() {
+        var stamp = document.getElementById('stamp');
+        if (stamp) stamp.textContent = 'Served from dist/index.html \u00b7 ' + new Date().toLocaleString();
+        document.documentElement.setAttribute('data-app-ready', 'true');
+      }
+      if (document.readyState === 'complete') ready();
+      else window.addEventListener('load', ready, { once: true });
+    })();
+  </script>
+</body>
+</html>
